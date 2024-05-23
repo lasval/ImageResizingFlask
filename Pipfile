@@ -10,6 +10,7 @@ boto3 = "*"
 flasgger = "*"
 requests = "*"
 gunicorn = "*"
+flask-cors = "*"
 
 [dev-packages]
 

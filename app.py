@@ -4,11 +4,13 @@ import io
 import requests
 from botocore.exceptions import NoCredentialsError
 from flasgger import Swagger, swag_from
+from flask_cors import CORS, cross_origin
 import os
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
 swagger = Swagger(app)
+CORS(app)  # 필요에 따라 전체 앱에 기본 설정 적용
 
 @app.route('/upload', methods=['POST'])
 @swag_from({
@@ -114,4 +116,4 @@ def health_check():
     return jsonify({'check': True}), 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=8080, debug=False)
