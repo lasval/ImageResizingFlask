@@ -9,6 +9,7 @@ pillow = "*"
 boto3 = "*"
 flasgger = "*"
 requests = "*"
+gunicorn = "*"
 
 [dev-packages]
 

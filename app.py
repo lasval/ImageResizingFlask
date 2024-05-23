@@ -7,6 +7,7 @@ from flasgger import Swagger, swag_from
 import os
 
 app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
 swagger = Swagger(app)
 
 @app.route('/upload', methods=['POST'])
