@@ -43,6 +43,7 @@ swagger = Swagger(app)
     ]
 })
 def resize_upload_image():
+    MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
     try:
         # 필수 파라미터 체크
         if 'presignedUrl' not in request.form or 'file' not in request.files:
@@ -51,8 +52,9 @@ def resize_upload_image():
         presignedUrl = request.form['presignedUrl']
         file = request.files['file']
 
-        print(presignedUrl)
-        print(file)
+        # 파일 크기 체크
+        if file.content_length > MAX_FILE_SIZE:
+            return jsonify({'error': 'File size exceeds the 10MB limit'}), 400
 
         # 고정된 값 설정
         STATIC_QUALITY = 80  # 고정된 이미지 품질 (1-100)
@@ -64,6 +66,7 @@ def resize_upload_image():
 
         # 너비 설정 (고정된 값 사용)
         new_width = min(original_width, STATIC_WIDTH)
+        
         # 높이 비율 유지하며 계산
         new_height = round(original_height * (new_width / float(original_width)))
 
@@ -106,4 +109,4 @@ def resize_upload_image():
         return jsonify({'error': str(e)}), 400
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='0.0.0.0', port=8080)
