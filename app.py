@@ -66,7 +66,7 @@ def resize_upload_image():
 
         # 너비 설정 (고정된 값 사용)
         new_width = min(original_width, STATIC_WIDTH)
-        
+
         # 높이 비율 유지하며 계산
         new_height = round(original_height * (new_width / float(original_width)))
 
@@ -107,6 +107,10 @@ def resize_upload_image():
         return jsonify({'error': 'Credentials not available'}), 400
     except Exception as e:
         return jsonify({'error': str(e)}), 400
+    
+@app.route('/healthcheck', methods=['GET'])
+def health_check():
+    return jsonify({'check': True}), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
